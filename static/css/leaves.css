@@ -1,0 +1,45 @@
+.container{
+    height: auto;
+}
+.container .leaves{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container .leaves button{
+    height: 50px;
+    width: 150px;
+    font-size: 18px;
+    border: none;
+    background-color: rgb(163, 89, 232);
+    color: white;
+}
+.container .pastleaves{
+    margin-top: 30px;
+}
+.container .pastleaves .leavebox{
+    margin-top: 20px;
+    height: auto;
+    width: 100%;
+    border: 2px solid black;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container .pastleaves .leavebox .leavereason{
+    height: auto;
+    width: 100%;
+}
+.container .pastleaves .leavebox .start{
+    width: 50%;
+    margin-top: 10px;
+}
+.container .pastleaves .leavebox .end{
+    width: 50%;
+    margin-top: 10px;
+}
+.container .pastleaves .leavebox .status{
+    height: auto;
+    margin-top: 10px;
+}

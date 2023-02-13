@@ -1,0 +1,76 @@
+.profile_form{
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.profile_form form{
+    height: auto;
+    width: 50%;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.container{
+    height: auto;
+}
+.container .userprofile{
+    height: 200px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container .userprofile .images{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .userprofile .images .userimg{
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .userprofile .userdetails{
+    height: 100%;
+    width: 40%;
+    padding: 30px;
+}
+.container .userprofile .editbtn{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .userjobdata{
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+.container .userjobdata .startdate{
+    height: auto;
+    width: 50%;
+    margin-top: 20px;
+}
+.container .userjobdata .dateofbirth{
+    height: auto;
+    width: 50%;
+    margin-top: 20px;
+}
+.container .userjobdata .address{
+    height: auto;
+    width: 100%;
+    margin-top: 20px;
+}
+.container .logout{
+    width: 100%;
+    padding: 20px;
+}

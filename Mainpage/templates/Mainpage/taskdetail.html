@@ -1,0 +1,73 @@
+{% extends 'Mainpage/basic.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tasks Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {% block style %}
+    <style>
+        .container{
+            height: auto;
+        }
+        .container .task{
+            height: auto;
+            margin-top: 30px;
+        }
+        .container .task .taskname{
+            text-align: center;
+        }
+        .container .task .taskdesc{
+            margin-top: 20px;
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-bottom: 5px solid black;
+        }
+        .container .task .start{
+            margin-top: 30px;
+            height: auto;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-bottom: 5px solid black;
+            padding: 20px;
+        }
+        .container .task .end{
+            margin-top: 30px;
+            height: auto;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-bottom: 5px solid black;
+            padding: 20px;
+        }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    <div class="container">
+        {% for i in taskdata %}
+        <div class="task">
+            <div class="taskname">
+                <h3><li>{{i.task_name}}</li></h3>
+            </div>
+            <div class="taskdesc">
+                <h5>Task Description</h5>
+                <p>{{i.task_detail}}</p>
+            </div>
+            <div class="start">
+                <h5>Start Date</h5>
+                <h6>{{i.start_date}}</h6>
+            </div>
+            <div class="end">
+                <h5>End Date</h5>
+                <h6>{{i.end_date}}</h6>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+  {% block script %}
+  {% endblock %}
+</html>

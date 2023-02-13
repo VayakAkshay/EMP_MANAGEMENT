@@ -1,0 +1,111 @@
+{% extends 'Mainpage/basic.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leaves</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/leaves.css' %}">
+    <style>
+      @media screen and (max-width: 500px) {
+        .container .pastleaves .leavebox .start{
+          width: 100%;
+        }
+        .container .pastleaves .leavebox .end{
+          width: 100%;
+        }
+      }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    {% if user.is_authenticated %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Apply for Leave</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/leaves/" method="post">{% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Leave Reason</label>
+                        <select class="form-select" id="selected" name="reason" aria-label="Select">
+                          <option selected>Select</option>
+                          <option value="Sick Leave">Sick Leave</option>
+                          <option value="Casual Leave">Casual Leave</option>
+                          <option value="Emergency Leave">Emergency Leave</option>
+                          <option value="Study Leave">Study Leave</option>
+                          <option value="Maternity Leave">Maternity Leave</option>
+                          <option value="Bereavement Leave">Bereavement Leave</option>
+                          <option value="Self Quarantine">Self Quarantine</option>
+                          <option value="Compensantory Leave">Compensantory Leave</option>
+                          <option value="Sabbatical Leave">Sabbatical Leave</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Start Date</label>
+                        <input type="date" name="start" class="form-control" id="" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">End Date</label>
+                        <input type="date" name="end" class="form-control" id="" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Apply</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>      
+    <div class="container">
+        <div class="leaves" style="margin-top: 20px;">
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal">Apply for Leaves</button>
+        </div>
+        <div class="pastleaves">
+            <h5>My Leaves</h5>
+            {% if leaves|length == 0 %}
+            <p>- No any Leaves</p>
+            {% else %}
+            {% for i in leaves %}
+            <div class="leavebox">
+              <div class="leavereason">
+                <h5>Leave Reason : </h5>
+                <h6>{{i.leave_reasion}}</h6>
+              </div>
+              <div class="start">
+                <h5>Start Date - {{i.start_date}}</h5>
+              </div>
+              <div class="end">
+                <h5>End Date - {{i.end_date}}</h5>
+              </div>
+              <div class="status">
+                {% if i.status == "In Waiting" %}
+                <h5>Status - <b style="color: yellowgreen;">{{i.status}}</b></h5>
+                {% elif i.status == "Rejected" %}
+                <h5>Status - <b style="color: red;">{{i.status}}</b></h5>
+                {% else %}
+                <h5>Status - <b style="color: green;">{{i.status}}</b></h5>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <h1 style="margin-top: 150px; text-align: center;">Please first goto login and come here</h1>
+    {% endif %}
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+  {% block script %}
+  {% endblock %}
+</html>

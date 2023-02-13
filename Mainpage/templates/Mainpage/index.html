@@ -1,0 +1,259 @@
+{% extends 'Mainpage/basic.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home - MatchGraphics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+      @media screen and (max-width: 727px){
+        footer{
+          height: 400px;
+        }
+        footer .content .part1{
+          height: auto;
+          width: 100%;
+        }
+        footer .content .part2{
+          height: auto;
+          width: 100%;
+        }
+        footer .content .part3{
+          padding: 0;
+        }
+      }
+      @media screen and (max-width: 768px){
+        .container{
+          height: 140vh;
+          flex-wrap: wrap;  
+        }
+        .container .part1{
+          height: 30%;
+          width: 100%;
+          text-align: center;
+        }
+        .container .part1 .content1 h1{
+          text-align: center;
+          width: 100%;
+        }
+        .container .part2{
+          height: 70%;
+          width: 100%;
+        }
+        main .contain1{
+          height: 800px;
+          border-bottom: 1px solid black;
+        }
+        main .contain1 .content1 .box1{
+          text-align: center;
+          width: 100%;
+          height: 30%;
+        }
+        main .contain1 .content1 .box2{
+          height: 70%;
+          width: 100%;
+        }
+        main .contain2{
+          height: 800px;
+          border-bottom: 1px solid black;
+        }
+        main .contain2 .content .box1{
+          text-align: center;
+          width: 100%;
+        }
+        main .contain2 .content .box2{
+          height: 40%;
+          width: 100%;
+        }
+        main .contain3{
+          height: 800px;
+          border-bottom: 1px solid black;
+        }
+        main .contain3 .content1 .box1{
+          text-align: center;
+          width: 100%;
+          height: 40%;
+        }
+        main .contain3 .content1 .box2{
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 550px) {
+        main{
+          padding: 10px;
+        }
+        footer .content{
+          width: 98%;
+        }
+        footer .content .part3 li{
+          padding: 10px;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        footer .content{
+          width: 98%;
+          height: 70%;
+        }
+        footer .content .part3{
+          display: none;
+        }
+        main .contain1{
+          height: 600px;
+          border-bottom: 1px solid black;
+        }
+        main .contain1 .content1 .box1{
+          text-align: center;
+          width: 100%;
+          height: 50%;
+        }
+        main .contain1 .content1 .box2{
+          height: 50%;
+          width: 100%;
+        }
+        main .contain2{
+          height: 600px;
+          border-bottom: 1px solid black;
+        }
+        main .contain2 .content .box1{
+          text-align: center;
+          width: 100%;
+          height: 50%;
+        }
+        main .contain2 .content .box2{
+          height: 50%;
+          width: 100%;
+        }
+        main .contain3{
+          height: 600px;
+          border-bottom: 1px solid black;
+        }
+        main .contain3 .content1 .box1{
+          text-align: center;
+          width: 100%;
+          height: 50%;
+        }
+        main .contain3 .content1 .box2{
+          width: 100%;
+          height: 50%;
+        }
+      }
+      @media screen and (max-width: 400px){
+        footer {
+          height: 300px;
+          padding: 5px;
+        }
+        footer .content{
+          width: 100%;
+        }
+      }
+    </style>
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+    {% if messages %}
+    <ul class="messages" id="message">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="container ">
+      <div class="part1">
+        <div class="content1"><h1>The home for all Employees</h1></div>
+        <div class="content2"><h5>This is employee management system which help to corporate society for good management.</h5></div>
+      </div>
+      <div class="part2">
+        <img src="{% static 'images/back.jpg' %}" alt="">
+      </div>
+    </div>
+    <main>
+        <div class="heading">
+          <h2>Features</h2>
+        </div>
+        <div class="contain1">
+          <div class="content1">
+            <div class="box1">
+              <div class="heading">
+                <h1>Attendance Sever</h1>
+                <br><br>
+                <h5>The system allows managers to create and manage schedules for employees, and provides real-time visibility into schedule attendances and
+                  allows employees to request and manage time off, and provides real-time visibility into leave balances and approvals.
+                </h5>
+              </div>
+            </div>
+            <div class="box2">
+              <img src="{% static 'images/attendance.jpg' %}" alt="">
+            </div>
+          </div>
+        </div>
+
+        <div class="contain2">
+          <div class="content">
+            <div class="box1">
+              <img src="{% static 'images/tasks.jpg' %}" alt="">
+            </div>
+            <div class="box2">
+              <div class="heading">
+                <h1>Daily Tasks</h1>
+                <br><br>
+                <h5>This is a list of tasks that need to be completed in order of priority, with the most important tasks listed first.
+                  Detailed descriptions of each task, including the steps involved and any relevant information or resources needed to complete the task.
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contain3">
+          <div class="content1">
+            <div class="box1">
+              <div class="heading">
+                <h1>Different Department</h1>
+                <br><br>
+                <h5>Information about each employee in the department, including job descriptions, contact information, and any relevant qualifications or certifications.
+                </h5>
+              </div>
+            </div>
+            <div class="box2">
+              <img src="{% static 'images/department.jpg' %}" alt="">
+            </div>
+          </div>
+        </div>
+    </main>
+    <footer>
+      <div class="content">
+        <div class="part1">
+          <a href="/" style="color: black; text-decoration: none;"><h1>Match Graphics</h1></a>
+        </div>
+        <div class="part2">
+          <div class="socialmedia">
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-linkedin"></a>
+            <a href="#" class="fa fa-youtube"></a>
+            <a href="#" class="fa fa-instagram"></a>
+          </div>
+        </div>
+        <div class="part3">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/tasks/">Tasks</a></li>
+          <li><a href="">Leaves</a></li>
+          <li><a href="">Attendence</a></li>
+        </div>
+      </div>
+    </footer>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+  {% block script %}
+  {% endblock %}
+</html>

@@ -1,0 +1,204 @@
+body::-webkit-scrollbar {
+    display: none;
+}
+body{
+    height: auto;
+    width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.container{
+    height: 80vh;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container .part1{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container .part1 .content1{
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items:end;
+}
+.container .part1 .content2{
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container .part2{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .part2 img{
+    height: 80%;
+    width: 100%;
+}
+main{
+    height: auto;
+    width: 100%;
+    padding: 70px;
+}
+main .heading{
+    text-align: center;
+}
+main .heading h2{
+    padding: 20px;
+}
+main .contain1{
+    height: 500px;
+    margin-top: 40px;
+}
+main .contain1 .content1{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+main .contain1 .content1 .box1{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main .contain1 .content1 .box1 .heading{
+    text-align: left;
+}
+main .contain1 .content1 .box2{
+    height: 100%;
+    width: 50%;
+}
+main .contain1 .content1 .box2 img{
+    height: 100%;
+    width: 100%;
+}
+
+main .contain2{
+    height: 500px;
+    margin-top: 40px;
+}
+main .contain2 .content{
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+main .contain2 .content .box1{
+    height: 100%;
+    width: 50%;
+}
+main .contain2 .content .box1 img{
+    height: 100%;
+    width: 100%;
+}
+main .contain2 .content .box2{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main .contain2 .content .box2 .heading{
+    text-align: left;
+}
+
+main .contain3{
+    height: 500px;
+    margin-top: 40px;
+}
+main .contain3 .content1{
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+main .contain3 .content1 .box1{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main .contain3 .content1 .box1 .heading{
+    text-align: left;
+}
+main .contain3 .content1 .box2{
+    height: 100%;
+    width: 50%;
+}
+main .contain3 .content1 .box2 img{
+    height: 100%;
+    width: 100%;
+}
+footer{
+    height: 300px;
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer .content{
+    height: 90%;
+    width: 90%;
+    background: linear-gradient(to bottom,white 90%,#1b44fa 10%,#0b37f8 100%);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+footer .content .part1{
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0b37f8;
+}
+footer .content .part2{
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer .content .part2 .socialmedia a{
+    text-decoration: none;
+    color:#0b37f8;
+    font-size: 20px;
+    margin: 20px;
+}
+footer .content .part2 .socialmedia a:hover{
+    color: rgb(8, 2, 14);
+}
+footer .content .part3{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer .content .part3 li{
+    list-style: none;
+    padding: 20px;
+}
+footer .content .part3 li a{
+    list-style: none;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+footer .content .part3 li a:hover{
+    color: #0b37f8;
+}

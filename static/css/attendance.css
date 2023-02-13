@@ -1,0 +1,37 @@
+.container{
+    height: auto;
+}
+.container .attendance{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container .attendance button{
+    height: 50px;
+    width: 160px;
+    font-size: 18px;
+    border: none;
+    background-color: rgb(163, 89, 232);
+    color: white;
+}
+.container .pastattendance{
+    margin-top: 30px;
+}
+.container .pastattendance .attendancebox{
+    margin-top: 20px;
+    height: auto;
+    width: 100%;
+    border: 2px solid black;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.container .pastattendance .attendancebox .time{
+    width: 40%;
+    margin-top: 10px;
+}
+.container .pastattendance .attendancebox .status{
+    width: 20%;
+    margin-top: 10px;
+}
