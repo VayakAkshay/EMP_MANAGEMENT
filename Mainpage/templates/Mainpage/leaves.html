@@ -23,7 +23,17 @@
   </head>
   <body>
     {% block body %}
-    {% if user.is_authenticated %}
+    {% if messages %}
+    <ul class="messages" id="message">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if user.is_authenticated and allows == 1 %}
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -34,7 +44,7 @@
             <form action="/leaves/" method="post">{% csrf_token %}
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="" class="form-label">Leave Reason</label>
+                        <label for="" class="form-label">Leave type</label>
                         <select class="form-select" id="selected" name="reason" aria-label="Select">
                           <option selected>Select</option>
                           <option value="Sick Leave">Sick Leave</option>
@@ -47,6 +57,10 @@
                           <option value="Compensantory Leave">Compensantory Leave</option>
                           <option value="Sabbatical Leave">Sabbatical Leave</option>
                       </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Reason</label>
+                      <textarea class="form-control" name="leave_reason" id="" rows="3"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Start Date</label>
@@ -78,7 +92,7 @@
             <div class="leavebox">
               <div class="leavereason">
                 <h5>Leave Reason : </h5>
-                <h6>{{i.leave_reasion}}</h6>
+                <h6>{{i.leave_type}}</h6>
               </div>
               <div class="start">
                 <h5>Start Date - {{i.start_date}}</h5>
@@ -101,7 +115,7 @@
         </div>
     </div>
     {% else %}
-    <h1 style="margin-top: 150px; text-align: center;">Please first goto login and come here</h1>
+    <h1 style="margin-top: 150px; text-align: center;">Please first complete your profile</h1>
     {% endif %}
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

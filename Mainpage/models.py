@@ -26,6 +26,7 @@ class TaskManager(models.Model):
     start_date = models.DateField(default=datetime.date.today)
     end_date = models.DateField(default=datetime.date.today)
     status = models.TextField(max_length=50,default="Remaining")
+    priority = models.IntegerField(default=0)
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
@@ -33,7 +34,8 @@ class TaskManager(models.Model):
 
 class LeaveManager(models.Model):
     leave_id = models.AutoField
-    leave_reasion = models.TextField(max_length=500,default="")
+    leave_type = models.TextField(max_length=500,default="")
+    leave_reason = models.TextField(max_length=5000,default="")
     start_date = models.DateField(default = datetime.date.today)
     end_date = models.DateField(default = datetime.date.today)
     status = models.TextField(max_length=50,default="In Waiting")
@@ -48,6 +50,28 @@ class attendacemanager(models.Model):
     arrival_time = models.TimeField(default=datetime.datetime.now().strftime("%H:%M:%S"))
     attendance_desc = models.TextField(max_length=30,default="")
     emp_id = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.emp_id)
+
+class Roles(models.Model):
+    role_id = models.AutoField
+    role_name = models.TextField(max_length=50,default="")
+    emp_id = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.emp_id) + self.role_name
+
+class SalaryTable(models.Model):
+    salary_id = models.AutoField
+    emp_id = models.IntegerField(default=0)
+    months = models.TextField(max_length=50,default="")
+    gross_salary = models.IntegerField(default=0)
+    PF = models.IntegerField(default=0)
+    PT = models.IntegerField(default=0)
+    gross_deduct = models.IntegerField(default=0)
+    Net = models.IntegerField(default=0)
+    status = models.TextField(max_length=30,default="")
 
     def __str__(self):
         return str(self.emp_id)

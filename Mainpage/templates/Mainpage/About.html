@@ -21,6 +21,7 @@
           flex-wrap: wrap;
         }
         .container .contain2 .content .box1{
+          height: 50%;
           width: 100%;
         }
         .container .contain2 .content .box2{
@@ -57,13 +58,16 @@
       }
       @media screen and (max-width: 500px) {
         .container .contain2{
-          height: 1100px;
+          height: 1200px;
         }
-        .container .contain2 .content .box2{
-          margin-top: 100px;
+        .container .contain2 .content .box1{
+          height: 40%;
         }
       }
       @media screen and (max-width: 450px) {
+        .container .contain2{
+          height: 1000px;
+        }
         footer .content{
           width: 98%;
           height: 70%;
@@ -71,8 +75,15 @@
         footer .content .part3{
           display: none;
         }
+        .container .contain2 .content .box1{
+          height: 30%;
+        }
       }
       @media screen and (max-width: 400px){
+        .container .contain2{
+          padding: 0;
+          height: 1000px;
+        }
         footer {
           height: 300px;
           padding: 5px;
@@ -96,7 +107,7 @@
                 <div class="heading">
                   <h1>About Us</h1>
                   <br><br>
-                  <h5>At Match Graphics, we aim to free up our time so we can focus on what you love about our company. We provide you with quick answers to everyday business questions. From more automated accounting to better-priced inventory management, we’ll guide you to tailored solutions so you can confidently make the best choice for your business. All processes are very simple and online. you can raise fund for your business at home. Now in modern generation, Information technology is one of the field is now very popular so that all businesses is on online platform. We provided all services related employees in simple way.
+                  <h5>Match Graphics is the largest supplier of printed décor paper in India and is a proud institution that was brought to life in the year 1997 by the visionary Mr. Anand Agrawal. With an existing production capacity of 2000 metric tons per month obtained from 21 Rotogravure printing machines, we produce printed decorative paper ranging from 50 gsm to 80 gsm that too in the size bracket of 1020mm, 1250mm & 1850mm. Our product portfolio consists of wooden designs, stones & marbles, fabric, abstract designs, floral designs, fancy as well as door designs for High pressure laminate, pre-laminated particle board and mdf boards. Our wide range of unique and different designs, lead to creation of beautiful decor surfaces that give the customers a competitive edge.
                   </h5>
                 </div>
               </div>
@@ -121,8 +132,8 @@
             <li><a href="/">Home</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/tasks/">Tasks</a></li>
-            <li><a href="">Leaves</a></li>
-            <li><a href="">Attendence</a></li>
+            <li><a href="/leaves/">Leaves</a></li>
+            <li><a href="/attendance/">Attendence</a></li>
           </div>
         </div>
       </footer>

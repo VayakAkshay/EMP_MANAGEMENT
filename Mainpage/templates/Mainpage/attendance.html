@@ -23,7 +23,17 @@
   </head>
   <body>
     {% block body %}
-    {% if user.is_authenticated %}
+    {% if messages %}
+    <ul class="messages" id="message">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if user.is_authenticated and allows == 1 %}
     <div class="container">
         <div class="attendance" style="margin-top: 20px;">
             <form action="/attendance/" method="post">{% csrf_token %}

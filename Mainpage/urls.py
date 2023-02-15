@@ -16,6 +16,7 @@ urlpatterns = [
     path('leaves/',views.Leaves_page,name="Leaves_page"),
     path('salary-slip/',views.salary_slip,name="salary_slip"),
     path('attendance/',views.attendance,name="attendance"),
+    path('salary/',views.mysalary,name="salary"),
 ]
 
 if settings.DEBUG:

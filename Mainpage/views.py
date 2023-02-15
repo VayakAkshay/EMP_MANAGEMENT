@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import ImageForm
-from .models import Profiles,TaskManager,LeaveManager,attendacemanager
+from .models import Profiles,TaskManager,LeaveManager,attendacemanager,Roles,SalaryTable
 import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -38,8 +38,15 @@ def aboutpage(request):
 
 def taskpage(request):
     user = request.user
-    tasks = TaskManager.objects.filter(emp_id = user.id).all()
-    return render(request,"Mainpage/tasks.html",{"Tasks":tasks})
+    allows = 0
+    if Profiles.objects.filter(email_id = user).all().exists():
+        allows = 1
+        tasks = TaskManager.objects.filter(emp_id = user.id).all()
+        return render(request,"Mainpage/tasks.html",{"Tasks":tasks,"allows":allows})
+    else:
+        allows = 0
+        messages.warning(request,"Please first complete profile after then see the tasks.")
+        return render(request,"Mainpage/tasks.html",{"allows":allows})
 
 def taskdetail(request):
     if request.method == "POST":
@@ -57,17 +64,29 @@ def completetask(request):
 def profilepage(request):
     user = request.user
     available = 0
+    leaves_data = LeaveManager.objects.filter(emp_id = user.id).all().values()
+    total_days = 0
+    for i in range(len(leaves_data)):
+        dates= leaves_data[i]["end_date"] - leaves_data[0]["start_date"]
+        days = dates.days
+        total_days = total_days + days
+    tasks_data = TaskManager.objects.filter(emp_id = user.id).all().values()
+    total_remaining = 0
+    for i in range(len(tasks_data)):
+        if tasks_data[i]["status"] == "Remaining":
+            total_remaining = total_remaining + 1
     if(Profiles.objects.filter(email_id = user)):
         available = 1
         profile_data = Profiles.objects.filter(email_id = user).values()
         department = Profiles.objects.filter(email_id = user).values()[0]["department_name"].split(",")[1:]
-        return render(request,"Mainpage/profile.html",{"profile_data":profile_data,"department":department})
+        return render(request,"Mainpage/profile.html",{"profile_data":profile_data,"department":department,"total_days":total_days,"total_remaining":total_remaining})
     else:
         available = 0
         profile_data = Profiles()
         full_name = user.first_name + " " + user.last_name
         email_id = user.username
         mobile = user.email
+        role = Roles()
         if request.method == "POST":
             profile_data.profile_id = user.id
             profile_data.full_name = full_name
@@ -83,10 +102,54 @@ def profilepage(request):
             if len(request.FILES) != 0:
                 profile_data.profile_img = request.FILES['profile_img']
             profile_data.save()
+            role.role_name = request.POST.get("role")
+            role.emp_id = user.id
+            role.save()
+            profile_datas = Profiles.objects.filter(email_id = user).all().values()[0]
+            salary = profile_datas["salary"]
+            months = ["January","February","March","April","May","June","July","August","September","Octomber","Navember","December"]
+            PF = (salary * 12)/100
+            PT = 1000
+            gross_deduct = PF + PT
+            netpay = salary - gross_deduct
+            total_salary = salary * 12
+            total_pf = PF * 12
+            total_pt = PT * 12
+            total_deduct = gross_deduct * 12
+            total_netpay = netpay * 12
+            today_date = date.today()
+            salary_list = []
+            for i in range(len(months)):
+                salary_dict = {}
+                salary_dict["Months"] = months[i]
+                salary_dict["Salary"] = salary
+                salary_dict["PF"] = PF
+                salary_dict["PT"] = PT
+                salary_dict["gross"] = gross_deduct
+                salary_dict["net"] = netpay
+                salary_list.append(salary_dict)
+            salary_dict = {}
+            salary_dict["Months"] = "Total Salary"
+            salary_dict["Salary"] = total_salary
+            salary_dict["PF"] = total_pf
+            salary_dict["PT"] = total_pt
+            salary_dict["gross"] = total_deduct
+            salary_dict["net"] = total_netpay
+            salary_list.append(salary_dict)
+            for i in range(len(salary_list)):
+                salary_table = SalaryTable()
+                salary_table.emp_id = user.id
+                salary_table.months = salary_list[i]["Months"]
+                salary_table.gross_salary = salary_list[i]["Salary"]
+                salary_table.PF = salary_list[i]["PF"]
+                salary_table.PT = salary_list[i]["PT"]
+                salary_table.gross_deduct = salary_list[i]["gross"]
+                salary_table.Net = salary_list[i]["net"]
+                salary_table.status = "Unpaid"
+                salary_table.save()
             return redirect("/profile/")
-    
     form = ImageForm()
-    return render(request, "Mainpage/profile.html",{"available":available,"form":form})
+    return render(request, "Mainpage/profile.html",{"available":available,"form":form,"total_days":total_days,"total_remaining":total_remaining})
 
 def edit_profile(request):
     if request.user.is_authenticated:
@@ -106,15 +169,23 @@ def edit_profile(request):
 
 def Leaves_page(request):
     user = request.user
-    if request.method == "POST":
-        reason = request.POST.get("reason")
-        start = request.POST.get("start")
-        end = request.POST.get("end")
-        id = user.id
-        leave_data = LeaveManager(leave_reasion = reason,start_date = start,end_date = end,emp_id = id)
-        leave_data.save()
-    leaves = LeaveManager.objects.filter(emp_id = user.id).all()
-    return render(request,"Mainpage/leaves.html",{"leaves":leaves})
+    allows = 0
+    if Profiles.objects.filter(email_id = user).all().exists():
+        allows = 1
+        if request.method == "POST":
+            type = request.POST.get("reason")
+            reasion = request.POST.get("leave_reason")
+            start = request.POST.get("start")
+            end = request.POST.get("end")
+            id = user.id
+            leave_data = LeaveManager(leave_type = type,leave_reason = reasion,start_date = start,end_date = end,emp_id = id)
+            leave_data.save()
+        leaves = LeaveManager.objects.filter(emp_id = user.id).all()
+        return render(request,"Mainpage/leaves.html",{"leaves":leaves,"allows":allows})
+    else:
+        allows = 0
+        messages.warning(request,"Please first complete profile after then apply for leaves.")
+        return render(request,"Mainpage/leaves.html",{"allows":allows})
 
 def salary_slip(request):
     user = request.user
@@ -165,24 +236,62 @@ def salary_slip(request):
     return render(request, "Mainpage/salary_slip.html",{"salary_list":salary_list,"start_date":start_date,"end_date":end_date,"today_date":today_date,"Department":Department,"name":name,"role":role})
 
 def attendance(request):
-    if request.user.is_authenticated:
-        today = datetime.date.today()
-        times = datetime.datetime.now().time()
-        arrive_time = datetime.time(9,00,00)
-        user = request.user
-        if attendacemanager.objects.filter(attendance_date = today):
-            pass
-        else:
-            if request.method == "POST":
-                if arrive_time < times:
-                    attendance = attendacemanager(emp_id = user.id,attendance_desc="Late")
-                    attendance.save()
-                else:
-                    attendance = attendacemanager(emp_id = user.id,attendance_desc = "Early")
-                    attendance.save()
-        attendance = attendacemanager.objects.filter(emp_id = user.id)
-        return render(request,"Mainpage/attendance.html",{"attendance":attendance})
-    return render(request,"Mainpage/attendance.html")
+    user = request.user
+    allows = 0
+    if Profiles.objects.filter(email_id = user).all().exists():
+        allows = 1
+        if request.user.is_authenticated:
+            today = datetime.date.today()
+            times = datetime.datetime.now().time()
+            arrive_time = datetime.time(9,00,00)
+            user = request.user
+            if attendacemanager.objects.filter(emp_id = user.id).filter(attendance_date = today):
+                messages.warning(request, "You are already attended for today")
+            else:
+                if request.method == "POST":
+                    if arrive_time < times:
+                        attendance = attendacemanager(emp_id = user.id,attendance_desc="Late")
+                        attendance.save()
+                    else:
+                        attendance = attendacemanager(emp_id = user.id,attendance_desc = "Early")
+                        attendance.save()
+            attendance = attendacemanager.objects.filter(emp_id = user.id)
+            return render(request,"Mainpage/attendance.html",{"attendance":attendance,"allows":allows})
+        return render(request,"Mainpage/attendance.html",{"allows":allows})
+
+    else:
+        allows = 0
+        messages.warning(request,"Please first complete profile after then see the tasks.")
+        return render(request,"Mainpage/attendance.html",{"allows":allows})
+
+def mysalary(request):
+    user = request.user
+    allows = 0
+    slip_allow = 0
+    profile_data = Profiles.objects.filter(email_id = user).all().values()[0]
+    name =  profile_data["full_name"]
+    Department = profile_data["department_name"][1:]
+    role = profile_data["role"]
+    today_date = date.today()
+    if Profiles.objects.filter(email_id = user).all().exists():
+        profile_data = Profiles.objects.filter(email_id = user).all().values()[0]
+        salary = profile_data["salary"]
+        allows = 1
+        if request.method == "POST":
+            slip_allow = 1
+            select_value = request.POST.get("selected_data")
+            if select_value == "Year":
+                salary_table = SalaryTable.objects.filter(emp_id = user.id).all().values()
+                print(salary_table)
+                return render(request, "Mainpage/salary.html",{"allows" :allows,"salary":salary,"name":name,"department":Department,"role":role,"slip_allow":slip_allow,"salary_table":salary_table,"today_date":today_date})
+            else:
+                salary_table = SalaryTable.objects.filter(emp_id = user.id).filter(months = select_value).all().values()
+                return render(request, "Mainpage/salary.html",{"allows" :allows,"salary":salary,"name":name,"department":Department,"role":role,"slip_allow":slip_allow,"salary_table":salary_table,"today_date":today_date})
+        return render(request, "Mainpage/salary.html",{"allows" :allows,"salary":salary,"name":name,"department":Department,"role":role,"slip_allow":slip_allow,"today_date":today_date})
+    else:
+        allows = 0
+        slip_allow = 0
+        return render(request, "Mainpage/salary.html",{"allows" :allows,"slip_allow":slip_allow})
 def logout_page(request):
     logout(request)
     return redirect("/")

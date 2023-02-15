@@ -71,6 +71,16 @@
   </head>
   <body>
     {% block body %}
+    {% if messages %}
+    <ul class="messages" id="message">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% if available == 0 %}
     <div class="profile_form">
         <form action="/profile/" method="post" enctype="multipart/form-data">{% csrf_token %}
@@ -88,21 +98,21 @@
                     <label for="exampleFormControlInput1" class="birth form-label">Birth Date</label>
                     <input type="date" class="form-control" name="birth_date" id="" required>
                 </div>
-              </div>  
+              </div>
               <div class="row" style="margin-top: 20px;">
                 <div class="col">
                     <label for="exampleFormControlInput1" class="form-label">Salary</label>
                     <input type="number" class="form-control" name="salary" id="" required>
                 </div>
                 <div class="col">
-                    <label for="exampleFormControlInput1" class="form-label">Gender</label>
-                    <select class="form-select" id="selected" name="gender" aria-label="Default select example" >
-                        <option selected>Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                  <label for="exampleFormControlInput1" class="form-label">Gender</label>
+                  <select class="form-select" id="selected" name="gender" aria-label="Default select example" >
+                      <option selected>Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                  </select>
                 </div>
-              </div>  <br><br>
+              </div><br>
               <label for="exampleFormControlInput1" class="form-label">Department</label><br>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Accounting">
@@ -188,7 +198,14 @@
         <h5>Address :</h5>
         <p>{{i.address}}</p>
       </div>
-      <a href="/salary-slip/"><button style="margin-top: 20px;" type="button" class="btn btn-primary">Download Salary Invoice</button></a>
+      <div class="dateofbirth">
+        <h5>Total Leaves:</h5>
+        <h1>{{total_days}}</h1>
+      </div>
+      <div class="dateofbirth">
+        <h5>Remaining Tasks:</h5>
+        <h1>{{total_remaining}}</h1>
+      </div>
      </div>
      <div class="logout">
       <form action="/logout/" method="post">{% csrf_token %}

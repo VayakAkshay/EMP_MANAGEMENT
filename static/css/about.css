@@ -9,7 +9,6 @@
     height: 100%;
     width: 100%;
     display: flex;
-    border: 2px solid black;
     flex-wrap: wrap;
 }
 .container .contain2 .content .box1{

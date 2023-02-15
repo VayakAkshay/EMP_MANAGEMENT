@@ -37,7 +37,17 @@
   </head>
   <body>
     {% block body %}
-    {% if user.is_authenticated %}
+    {% if messages %}
+    <ul class="messages" id="message">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if user.is_authenticated and allows == 1 %}
     <div class="container">
         {% if Tasks|length == 0 %}
         <h5>No any tasks yet</h5>
@@ -47,7 +57,11 @@
             <div class="taskdetail">
                 <h3 style="width: 100%;">{{i.task_name}}</h3>
                 <p style="width: 100%;">Start Date - {{i.start_date}} </p>
-                <p> Status - <b>{{i.status}}</b></p>
+                {% if i.status == "Completed" %}
+                <p> Status - <b style="color: green;">{{i.status}}</b></p>
+                {% else %}
+                <p> Status - <b style="color: red;">{{i.status}}</b></p>
+                {% endif %}
             </div>
             <div class="taskbuttons">
                 <form action="/taskdetails/" method="post">{% csrf_token %}
@@ -62,7 +76,7 @@
         {% endif %}
     </div>
     {% else %}
-    <h1 style="margin-top: 150px; text-align: center;">Please first goto login and come here</h1>
+    <h1 style="margin-top: 150px; text-align: center;">Please first complete your profile and come here</h1>
     {% endif %}
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
