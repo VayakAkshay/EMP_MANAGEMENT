@@ -14,7 +14,7 @@ class Profiles(models.Model):
     salary = models.IntegerField(default=0)
     gender = models.TextField(max_length=15,default="")
     address = models.TextField(max_length=300,default="")
-    role = models.TextField(max_length="50",default = "")
+    role = models.TextField(max_length=50,default = "")
 
     def __str__(self):
         return str(self.profile_id) + " - " + self.full_name
@@ -47,7 +47,7 @@ class LeaveManager(models.Model):
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
     attendance_date = models.DateField(default=datetime.date.today)
-    arrival_time = models.TimeField(default=datetime.datetime.now().strftime("%H:%M:%S"))
+    arrival_time = models.TimeField(default=datetime.datetime.now().strftime("%H:%M:%S")) # type: ignore
     attendance_desc = models.TextField(max_length=30,default="")
     emp_id = models.IntegerField(default=0)
 
@@ -74,4 +74,4 @@ class SalaryTable(models.Model):
     status = models.TextField(max_length=30,default="")
 
     def __str__(self):
-        return str(self.emp_id)
+        return str(self.emp_id) + " - " + self.months

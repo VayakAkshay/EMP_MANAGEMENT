@@ -5,7 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leaves</title>
+    {% block title %}
+    My Salary - Download salary slip
+    {% endblock %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     {% block style %}
     <link rel="stylesheet" href="{% static 'css/leaves.css' %}">
@@ -58,7 +60,8 @@
         {% endfor %}
     </ul>
     {% endif %}
-    {% if user.is_authenticated and allows == 1 %}
+    {% if user.is_authenticated %}
+    {% if allows == 1 %}
     <div class="container">
         <div class="mysalary">
           <div class="salary">
@@ -96,7 +99,11 @@
               <div class="card-body">
                 <h5 class="card-title">Match Graphics</h5>
                 <p class="card-text" style="text-align: center; padding: 20px;">Salary Invoice</p>
+                {% if values == "Year" %}
                 <p class="card-text" style="text-align: center; padding: 20px;">This is to certify that we have paid salary for the financial period {{start_date}} to {{end_date}}</p>
+                {% else %}
+                <p class="card-text" style="text-align: center; padding: 20px;">This is to certify that we have paid salary for the financial period for {{values}}</p>
+                {% endif %}
                 <p class="card-text">Name : {{name}} </p>
                 <p class="card-text">Department : {{department}}</p>
                 <p class="card-text">Role : {{role}}</p>
@@ -135,11 +142,14 @@
                 <p class="card-text">Factory : Radhe Industrial Estate, Tejpur Road, Sarkhej-Bavla Highway, Changodar, Dist :Ahmedabad-382210 Phone:02717-298860 web:-www.matchwell.com Email: matchwelldecorpapers@yahoo.co.in</p>
               </div>
           </div>    
-          <button style="margin-top: 20px;" class="btn btn-primary" id="salaryinvoice">Print</button>     
+          <button style="margin-top: 20px;" class="btn btn-primary" id="salaryinvoice">Download</button>     
           {% endif %} 
     </div>
     {% else %}
     <h1 style="margin-top: 150px; text-align: center;">Please first complete your profile</h1>
+    {% endif %}
+    {% else %}
+    <h1 style="margin-top: 150px; text-align: center;">Please first complete the login</h1>
     {% endif %}
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

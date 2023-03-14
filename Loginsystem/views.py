@@ -4,7 +4,6 @@ from django.contrib import messages
 import random
 from email.message import EmailMessage
 from django.contrib.auth.models import User
-from email.message import EmailMessage
 import ssl
 import smtplib
 from .models import OTP_Data
@@ -37,6 +36,7 @@ def signup(request):
         if User.objects.filter(username=email).exists():
             messages.warning(request,"This user is already exist")
         else:
+            OTP_Data.objects.all().delete()
             otp_generate = random.randrange(1000, 9999)
             OTP_data = OTP_Data(email_id = email,otp = otp_generate)
             OTP_data.save()
@@ -78,7 +78,7 @@ def PasswordPage(request):
         else:
             enable_otp = 1
             messages.warning(request,"Please Enter Valid OTP")
-            return render(request,"Loginsystem/regester.html",{"enable_otp":enable_otp})
+            return render(request,"Loginsystem/signup.html",{"enable_otp":enable_otp})
     return render(request,"Loginsystem/password.html")
 
 def forgot_otp(request):
@@ -86,8 +86,8 @@ def forgot_otp(request):
     if request.method == "POST":
         email = request.POST.get("email_id")
         user = User.objects.filter(username = email)
-        print(user)
         if user is not None:
+            OTP_Data.objects.all().delete()
             otp_generate = random.randrange(1000, 9999)
             OTP_data = OTP_Data(email_id = email,otp = otp_generate)
             OTP_data.save()
@@ -117,17 +117,13 @@ def forgot_otp(request):
 def forgot_pass(request):
     if request.method == "POST":
         email = request.POST.get("mail_id")
-        print(email)
         otp = request.POST.get("otp")
         mydata = OTP_Data.objects.filter(email_id=email).values()
-        print(mydata)
         otp_field = str(mydata)[-7:-3]
         print(otp_field)
-        print("DKMD")
         if otp == otp_field:
             otp_data = OTP_Data.objects.filter(email_id = email)
             otp_data.delete()
-            print("PASS")
             local_data = 1
             return render(request,"Loginsystem/forgot_pass.html",{"local_data":local_data})
         else:
