@@ -122,6 +122,7 @@
         height: 30%;
         width: 100%;
       }
+
       .container .userjobdata {
         width: 100%;
       }
@@ -130,6 +131,7 @@
         width: 100%;
         margin-left: 0;
       }
+
       .container .userjobdata .address {
         text-align: center;
       }
@@ -153,10 +155,10 @@
   {% if available == 0 %}
   <div class="profile_form">
     <form action="/profile/" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <div class="mb-3">
-          <label for="" class="form-label">Profile Image:</label>
-          {{form}}
-          <div class="error_form" id="error_form" style="color: red;">
+      <div class="mb-3">
+        <label for="" class="form-label">Profile Image:</label>
+        {{form}}
+        <div class="error_form" id="error_form" style="color: red;">
         </div>
         <div class="row" style="margin-top: 20px;">
           <div class="col">
@@ -183,34 +185,11 @@
           </div>
         </div><br>
         <label for="" class="form-label">Department</label><br>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Accounting">
-          <label class="form-check-label" for="inlineCheckbox1">Accounting</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Economic">
-          <label class="form-check-label" for="inlineCheckbox2">Economic</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Finance">
-          <label class="form-check-label" for="inlineCheckbox3">Finance</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Marketting">
-          <label class="form-check-label" for="inlineCheckbox4">Marketting</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Management">
-          <label class="form-check-label" for="inlineCheckbox5">Management</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Information Technology">
-          <label class="form-check-label" for="inlineCheckbox6">Information Technology</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="International Business">
-          <label class="form-check-label" for="inlineCheckbox7">International Business</label>
-        </div><br><br>
+        <select class="form-select" name="department" aria-label="Default select example">
+          {% for j in department_data %}
+          <option value="{{j}}">{{j}}</option>
+          {% endfor %}
+        </select><br>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Enter your Role</label>
           <input type="text" class="form-control" id="exampleFormControlInput1" name="role">
@@ -219,7 +198,6 @@
           <label for="exampleFormControlInput1" class="form-label">Address</label>
           <input type="text" class="form-control" id="" name="address">
         </div>
-        <input type="text" name="checkbox_val" id="checkbox_val" hidden>
         <button type="submit" id="main_btn" class="btn btn-primary">Submit</button>
     </form>
   </div>
@@ -256,10 +234,8 @@
         <h5>Gender - {{i.gender}}</h5>
       </div>
       <div class="dateofbirth">
-        <h5>Departments - </h5>
-        {% for i in department %}
-        <li>{{i}}</li>
-        {% endfor %}
+        <h5>Departments </h5>
+        <li>{{department}}</li>
       </div>
       <div class="dateofbirth">
         <h5>Role - {{i.role}}</h5>
@@ -296,111 +272,16 @@
 </html>
 {% block script %}
 <script>
-  if(document.getElementById("id_profile_img")){
+  if (document.getElementById("id_profile_img")) {
     document.getElementById("id_profile_img").onchange = function () {
-    if (this.files[0].size > 1048576) {
-      this.value = "";
-      document.getElementById("error_form").innerText = "File size must be less than 1 MB";
+      if (this.files[0].size > 1048576) {
+        this.value = "";
+        document.getElementById("error_form").innerText = "File size must be less than 1 MB";
+      }
+      else {
+        document.getElementById("error_form").innerText = "";
+      }
     }
-    else {
-      document.getElementById("error_form").innerText = "";
-    }
-  }
-  }
-  let field_str = [];
-  if (document.getElementById("inlineCheckbox1") != null) {
-    document.getElementById("inlineCheckbox1").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox1").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox1").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox1").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox2").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox2").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox2").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox2").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox3").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox3").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox3").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox3").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox4").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox4").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox4").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox4").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox5").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox5").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox5").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox5").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox6").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox6").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox6").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox6").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    var field_data = "";
-    document.getElementById("inlineCheckbox7").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox7").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox7").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox7").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
   }
   if (document.getElementById("main_btn") != null) {
     var field_data = "";

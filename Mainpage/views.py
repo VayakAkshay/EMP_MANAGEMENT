@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import ImageForm
-from .models import Profiles,TaskManager,LeaveManager,attendacemanager,Roles,SalaryTable
+from .models import Profiles,TaskManager,LeaveManager,attendacemanager,Roles,SalaryTable,DepartmentList
 import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -67,6 +67,7 @@ def profilepage(request):
     available = 0
     leaves_data = LeaveManager.objects.filter(emp_id = user.id).filter(status = "Approved").all().values()
     total_days = 0
+    department_data = DepartmentList.objects.all()
     for i in range(len(leaves_data)):
         dates= leaves_data[i]["end_date"] - leaves_data[i]["start_date"]
         days = dates.days
@@ -79,7 +80,7 @@ def profilepage(request):
     if(Profiles.objects.filter(email_id = user)):
         available = 1
         profile_data = Profiles.objects.filter(email_id = user).values()
-        department = Profiles.objects.filter(email_id = user).values()[0]["department_name"].split(",")[1:]
+        department = Profiles.objects.filter(email_id = user).values()[0]["department_name"]
         return render(request,"Mainpage/profile.html",{"profile_data":profile_data,"department":department,"total_days":total_days,"total_remaining":total_remaining})
     else:
         available = 0
@@ -98,7 +99,7 @@ def profilepage(request):
             profile_data.salary = request.POST.get("salary")
             profile_data.gender = request.POST.get("gender")
             profile_data.address = request.POST.get("address")
-            profile_data.department_name = request.POST.get("checkbox_val")
+            profile_data.department_name = request.POST.get("department")
             profile_data.role = request.POST.get("role")
             if len(request.FILES) != 0:
                 profile_data.profile_img = request.FILES['profile_img']
@@ -150,7 +151,7 @@ def profilepage(request):
                 salary_table.save()
             return redirect("/profile/")
     form = ImageForm()
-    return render(request, "Mainpage/profile.html",{"available":available,"form":form,"total_days":total_days,"total_remaining":total_remaining})
+    return render(request, "Mainpage/profile.html",{"available":available,"form":form,"total_days":total_days,"total_remaining":total_remaining,"department_data":department_data})
 
 def edit_profile(request):
     if request.user.is_authenticated:
@@ -165,6 +166,7 @@ def edit_profile(request):
         role = profile_datas["role"]
         address = profile_datas["address"]
         form = ImageForm()
+        department_data = DepartmentList.objects.all()
         if request.method == "POST":
             Profiles.objects.filter(email_id = user).delete()
             Roles.objects.filter(emp_id = user.id).delete()
@@ -180,7 +182,7 @@ def edit_profile(request):
             profile_data.salary = request.POST.get("salary")
             profile_data.gender = request.POST.get("gender")
             profile_data.address = request.POST.get("address")
-            profile_data.department_name = request.POST.get("checkbox_val")
+            profile_data.department_name = request.POST.get("department")
             profile_data.role = request.POST.get("role")
             if len(request.FILES) != 0:
                 profile_data.profile_img = request.FILES['profile_img']
@@ -189,9 +191,9 @@ def edit_profile(request):
             role.emp_id = user.id
             role.save()
             User.objects.filter(username = user).update(first_name = request.POST.get("fname"))
-            User.objects.filter(username = user).update(first_name = request.POST.get("lname"))
+            User.objects.filter(username = user).update(last_name = request.POST.get("lname"))
             return redirect("/profile/")
-        return render(request,"Mainpage/edit_profile.html",{"form":form,"fname":first_name,"lname":last_name,"join_date":joining_date,"birth_date":birth_date,"salary":salary,"gender":gender,"role":role,"address":address})
+        return render(request,"Mainpage/edit_profile.html",{"form":form,"fname":first_name,"lname":last_name,"join_date":joining_date,"birth_date":birth_date,"salary":salary,"gender":gender,"role":role,"address":address,"department_data":department_data})
 
 def Leaves_page(request):
     user = request.user

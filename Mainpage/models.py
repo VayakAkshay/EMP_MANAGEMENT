@@ -42,7 +42,7 @@ class LeaveManager(models.Model):
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.leave_id) + " - " + str(self.emp_id)
+        return str(self.emp_id)
 
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
@@ -75,3 +75,10 @@ class SalaryTable(models.Model):
 
     def __str__(self):
         return str(self.emp_id) + " - " + self.months
+
+class DepartmentList(models.Model):
+    department_id = models.AutoField
+    department_name = models.TextField(max_length=200,default="")
+
+    def __str__(self):
+        return self.department_name
