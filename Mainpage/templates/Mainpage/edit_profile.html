@@ -57,56 +57,56 @@
           {{form}}
           <div class="error_form" id="error_form" style="color: red;">
           </div>
-          </div>
-          <div class="col">
-            <label for="" class="form-label">First Name</label>
-            <input type="text" class="form-control" value="{{fname}}" name="fname" id="" required>
-          </div>
-          <div class="col">
-            <label for="" class="form-label">Last Name</label>
-            <input type="text" class="form-control" value="{{lname}}" name="lname" id="" required>
-          </div>
         </div>
-        <div class="row" style="margin-top: 20px;">
-          <div class="col">
-            <label for="" class="form-label">Joining Date</label>
-            <input type="date" class="form-control" defaultValue="{{join_date}}" name="joining_date" id="jdate" required>
-          </div>
-          <div class="col">
-            <label for="" class="birth form-label">Birth Date</label>
-            <input type="date" class="form-control" defaultValue="{{birth_date}}" name="birth_date" id="" required>
-          </div>
+        <div class="col">
+          <label for="" class="form-label">First Name</label>
+          <input type="text" class="form-control" value="{{fname}}" name="fname" id="" required>
         </div>
-        <div class="row" style="margin-top: 20px;">
-          <div class="col">
-            <label for="" class="form-label">Salary</label>
-            <input type="number" class="form-control" value="{{salary}}" name="salary" id="" required>
-          </div>
-          <div class="col">
-            <label for="" class="form-label">Gender</label>
-            <select class="form-select" id="selected" name="gender" aria-label="{{gender}}">
-              <option selected>Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div> <br>
-        <label for="" class="form-label">Department</label><br>
-        <select class="form-select" name="department" aria-label="Default select example">
-          {% for j in department_data %}
-          <option value="{{j}}">{{j}}</option>
-          {% endfor %}
-        </select><br>
-        <div class="mb-3">
-          <label for="" class="form-label">Enter your Role</label>
-          <input type="text" class="form-control" value="{{role}}" id="" name="role">
+        <div class="col">
+          <label for="" class="form-label">Last Name</label>
+          <input type="text" class="form-control" value="{{lname}}" name="lname" id="" required>
         </div>
-        <div class="mb-3">
-          <label for="" class="form-label">Address</label>
-          <input type="text" class="form-control" value="{{address}}" id="" name="address">
+      </div>
+      <div class="row" style="margin-top: 20px;">
+        <div class="col">
+          <label for="" class="form-label">Joining Date</label>
+          <input type="date" class="form-control" defaultValue="{{join_date}}" name="joining_date" id="jdate" required>
         </div>
-        <input type="text" name="checkbox_val" id="checkbox_val" hidden>
-        <button type="submit" id="main_btn" class="btn btn-primary">Submit</button>
+        <div class="col">
+          <label for="" class="birth form-label">Birth Date</label>
+          <input type="date" class="form-control" defaultValue="{{birth_date}}" name="birth_date" id="" required>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 20px;">
+        <div class="col">
+          <label for="" class="form-label">Salary</label>
+          <input type="number" class="form-control" value="{{salary}}" name="salary" id="" required>
+        </div>
+        <div class="col">
+          <label for="" class="form-label">Gender</label>
+          <select class="form-select" id="selected" name="gender" aria-label="{{gender}}">
+            <option selected>Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div> <br>
+      <label for="" class="form-label">Department</label><br>
+      <select class="form-select" name="department" aria-label="Default select example">
+        {% for j in department_data %}
+        <option value="{{j}}">{{j}}</option>
+        {% endfor %}
+      </select><br>
+      <div class="mb-3">
+        <label for="" class="form-label">Enter your Role</label>
+        <input type="text" class="form-control" value="{{role}}" id="" name="role">
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Address</label>
+        <input type="text" class="form-control" value="{{address}}" id="" name="address">
+      </div>
+      <input type="text" name="checkbox_val" id="checkbox_val" hidden>
+      <button type="submit" id="main_btn" class="btn btn-primary">Submit</button>
     </form>
   </div>
   {% endblock %}
@@ -129,100 +129,6 @@
         document.getElementById("error_form").innerText = "";
       }
     }
-  }
-  if (document.getElementById("inlineCheckbox1") != null) {
-    document.getElementById("inlineCheckbox1").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox1").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox1").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox1").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox2").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox2").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox2").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox2").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox3").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox3").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox3").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox3").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox4").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox4").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox4").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox4").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox5").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox5").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox5").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox5").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    document.getElementById("inlineCheckbox6").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox6").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox6").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox6").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
-    var field_data = "";
-    document.getElementById("inlineCheckbox7").addEventListener("click", () => {
-      if (document.getElementById("inlineCheckbox7").checked) {
-        chackbox_val = document.getElementById("inlineCheckbox7").value;
-        field_str.push(chackbox_val);
-      }
-      else {
-        chackbox_val = document.getElementById("inlineCheckbox7").value;
-        var index = field_str.indexOf(chackbox_val);
-        if (index !== -1) {
-          field_str.splice(index, 1);
-        }
-      }
-    })
   }
   if (document.getElementById("main_btn") != null) {
     var field_data = "";
