@@ -204,15 +204,20 @@ def Leaves_page(request):
     allows = 0
     if Profiles.objects.filter(email_id = user).all().exists():
         allows = 1
+        leaves_data = LeaveManager()
         if request.method == "POST":
             type = request.POST.get("reason")
             reasion = request.POST.get("leave_reason")
             start = request.POST.get("start")
             end = request.POST.get("end")
             id = user.id
-            leave_data = LeaveManager(leave_type = type,leave_reason = reasion,start_date = start,end_date = end,emp_id = id)
+            leaves_data.leave_type = type
+            leaves_data.leave_reason = reasion
+            leaves_data.start_date = start
+            leaves_data.end_date = end
+            leaves_data.emp_id = id
+            leaves_data.save()
         leaves = LeaveManager.objects.filter(emp_id = user.id).all()
-        print(leaves)
         return render(request,"Mainpage/leaves.html",{"leaves":leaves,"allows":allows})
     else:
         allows = 0
