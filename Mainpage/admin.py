@@ -9,6 +9,5 @@ admin.site.register(SalaryTable)
 admin.site.register(Roles)
 admin.site.register(DepartmentList)
 
-
 class ImageAdmin(admin.ModelAdmin):
     list_display = ["profile_id","profile_img"]

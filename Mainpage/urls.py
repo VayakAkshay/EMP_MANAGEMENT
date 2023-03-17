@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
+from .views import edit_profile
 from django.conf import settings
 from django.conf.urls.static import static
-
 
 urlpatterns = [
     path('',views.Home,name="Home"),
@@ -12,10 +12,10 @@ urlpatterns = [
     path('complete/',views.completetask,name="completetask"),
     path('profile/',views.profilepage,name="profilepage"),
     path('logout/',views.logout_page,name="logout_page"),
-    path('edit-profile/',views.edit_profile,name="edit_profile"),
     path('leaves/',views.Leaves_page,name="Leaves_page"),
     path('attendance/',views.attendance,name="attendance"),
     path('salary/',views.mysalary,name="salary"),
+    path('edit-profile/',edit_profile,name="edit_profile"), # type: ignore
 ]
 
 if settings.DEBUG:

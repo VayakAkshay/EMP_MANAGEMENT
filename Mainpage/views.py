@@ -40,6 +40,10 @@ def aboutpage(request):
 def taskpage(request):
     user = request.user
     allows = 0
+    if request.method == "POST":
+        emp_id = request.POST.get("emp_id")
+        print(emp_id)
+
     if Profiles.objects.filter(email_id = user).all().exists():
         allows = 1
         tasks = TaskManager.objects.filter(emp_id = user.id).all().order_by('-priority')
@@ -207,8 +211,8 @@ def Leaves_page(request):
             end = request.POST.get("end")
             id = user.id
             leave_data = LeaveManager(leave_type = type,leave_reason = reasion,start_date = start,end_date = end,emp_id = id)
-            leave_data.save()
         leaves = LeaveManager.objects.filter(emp_id = user.id).all()
+        print(leaves)
         return render(request,"Mainpage/leaves.html",{"leaves":leaves,"allows":allows})
     else:
         allows = 0

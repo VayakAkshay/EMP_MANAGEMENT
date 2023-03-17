@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django import forms
 # Create your models here.
 
 class Profiles(models.Model):
@@ -31,14 +32,18 @@ class TaskManager(models.Model):
 
     def __str__(self):
         return self.task_name + " - " + str(self.emp_id)
-
+    
+LEAVE_CHOICES = (
+    ("In Waiting", "In Waiting"),
+    ("Approved", "Approved"),
+)
 class LeaveManager(models.Model):
     leave_id = models.AutoField
     leave_type = models.TextField(max_length=500,default="")
     leave_reason = models.TextField(max_length=5000,default="")
     start_date = models.DateField(default = datetime.date.today)
     end_date = models.DateField(default = datetime.date.today)
-    status = models.TextField(max_length=50,default="In Waiting")
+    status = models.TextField(max_length=30,choices=LEAVE_CHOICES,default = 'In Waiting')
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
