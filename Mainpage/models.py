@@ -36,6 +36,7 @@ class TaskManager(models.Model):
 LEAVE_CHOICES = (
     ("In Waiting", "In Waiting"),
     ("Approved", "Approved"),
+    ("Rejected","Rejected"),
 )
 
 class LeaveManager(models.Model):
