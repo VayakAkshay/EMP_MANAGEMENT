@@ -177,7 +177,7 @@
           </div>
           <div class="col">
             <label for="" class="form-label">Gender</label>
-            <select class="form-select" id="selected" name="gender" aria-label="Default select example">
+            <select class="form-select" id="selected" name="gender" aria-label="Default select example" required>
               <option selected>Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
@@ -185,18 +185,18 @@
           </div>
         </div><br>
         <label for="" class="form-label">Department</label><br>
-        <select class="form-select" name="department" aria-label="Default select example">
+        <select class="form-select" name="department" aria-label="Default select example" required>
           {% for j in department_data %}
           <option value="{{j}}">{{j}}</option>
           {% endfor %}
         </select><br>
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Enter your Role</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" name="role">
+          <label for="" class="form-label">Enter your Role</label>
+          <input type="text" class="form-control" id="" name="role" required>
         </div>
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Address</label>
-          <input type="text" class="form-control" id="" name="address">
+          <label for="" class="form-label">Address</label>
+          <input type="text" class="form-control" id="" name="address" required>
         </div>
         <button type="submit" id="main_btn" class="btn btn-primary">Submit</button>
     </form>

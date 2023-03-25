@@ -110,7 +110,7 @@
     <main>
       <div class="container">
         <div class="name">
-          <h3><b>Match Graphics</b></h3>
+          <h3><b>New Password</b></h3>
         </div>
         <div class="form">
           <form action="/new_pass/" method="post">{% csrf_token %}
@@ -130,9 +130,5 @@
   <script>
     data = JSON.parse(localStorage.user_data);
     document.getElementById("mail_id").value = data["email"];
-    if(pass_valid == 1){
-      localStorage.clear();
-      console.log()
-    }
   </script>
 </html>

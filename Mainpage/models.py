@@ -37,6 +37,7 @@ LEAVE_CHOICES = (
     ("In Waiting", "In Waiting"),
     ("Approved", "Approved"),
 )
+
 class LeaveManager(models.Model):
     leave_id = models.AutoField
     leave_type = models.TextField(max_length=500,default="")
