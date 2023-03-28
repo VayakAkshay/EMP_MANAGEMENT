@@ -1,7 +1,7 @@
 from django.db import models
 import datetime
 from django import forms
-# Create your models here.
+
 
 class Profiles(models.Model):
     profile_id = models.IntegerField(default=0)
@@ -18,7 +18,8 @@ class Profiles(models.Model):
     role = models.TextField(max_length=50,default = "")
 
     def __str__(self):
-        return str(self.profile_id) + " - " + self.full_name
+        return str(self.profile_id) + " - " + self.full_name + " - " + self.email_id + " - " + str(self.mobile_no) + " - " + self.department_name + " - " + str(self.salary) + " - " + " - " + self.role + " - " + str(self.dateofjoin)
+
 
 class TaskManager(models.Model):
     task_id = models.AutoField
@@ -31,12 +32,16 @@ class TaskManager(models.Model):
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.task_name + " - " + str(self.emp_id)
+        return self.task_name + " - " + str(self.emp_id) + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + str(self.priority)
     
 LEAVE_CHOICES = (
     ("In Waiting", "In Waiting"),
     ("Approved", "Approved"),
     ("Rejected","Rejected"),
+)
+SALARY_CHOICE = (
+    ("Unpaid", "Unpaid"),
+    ("Paid", "Paid"),
 )
 
 class LeaveManager(models.Model):
@@ -49,7 +54,7 @@ class LeaveManager(models.Model):
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.emp_id)
+        return str(self.emp_id) + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status
 
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
@@ -59,7 +64,7 @@ class attendacemanager(models.Model):
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.emp_id)
+        return str(self.emp_id) + str(self.attendance_date) + " - " + self.arrival_time
 
 class Roles(models.Model):
     role_id = models.AutoField
@@ -67,7 +72,7 @@ class Roles(models.Model):
     emp_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.emp_id) + self.role_name
+        return str(self.emp_id) + " - " + self.role_name 
 
 class SalaryTable(models.Model):
     salary_id = models.AutoField
@@ -78,10 +83,10 @@ class SalaryTable(models.Model):
     PT = models.IntegerField(default=0)
     gross_deduct = models.IntegerField(default=0)
     Net = models.IntegerField(default=0)
-    status = models.TextField(max_length=30,default="")
+    status = models.TextField(max_length=30,choices=SALARY_CHOICE,default = 'Unpaid')
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.months
+        return str(self.emp_id) + " - " + self.months + " - " + str(self.gross_salary) + " - " + str(self.gross_deduct) + " - " + str(self.Net) + " - " + self.status
 
 class DepartmentList(models.Model):
     department_id = models.AutoField

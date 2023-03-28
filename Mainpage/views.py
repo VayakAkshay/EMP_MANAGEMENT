@@ -8,6 +8,8 @@ import datetime
 from datetime import date
 from dateutil.relativedelta import relativedelta
 import os
+from datetime import timedelta
+import calendar
 
 # Create your views here.
 
@@ -205,6 +207,7 @@ def Leaves_page(request):
     if Profiles.objects.filter(email_id = user).all().exists():
         allows = 1
         leaves_data = LeaveManager()
+        profile_data = Profiles.objects.filter(email_id = user).values()[0]
         if request.method == "POST":
             type = request.POST.get("reason")
             reasion = request.POST.get("leave_reason")
@@ -216,6 +219,21 @@ def Leaves_page(request):
             leaves_data.start_date = start
             leaves_data.end_date = end
             leaves_data.emp_id = id
+            d1 = datetime.datetime.strptime(start, "%Y-%m-%d")
+            d2 = datetime.datetime.strptime(end, "%Y-%m-%d")
+            time_def = (d2 - d1).days
+            dates = datetime.date.today()
+            num = dates.month
+            month_name = calendar.month_name[num]
+            salary = SalaryTable.objects.filter(emp_id = user.id).filter(months = month_name).values()[0]["Net"]
+            t_salary = SalaryTable.objects.filter(emp_id = user.id).filter(months = "Total Salary").values()[0]["Net"]
+            temp_salary = round(salary / 30)
+            cut_salary = temp_salary * time_def
+            main_salary = salary - cut_salary
+            main_salary2 = t_salary - main_salary
+            print(main_salary2)
+            SalaryTable.objects.filter(emp_id = user.id).filter(months = month_name).update(Net = main_salary)
+            SalaryTable.objects.filter(emp_id = user.id).filter(months = "Total Salary").update(Net = main_salary2)
             leaves_data.save()
         leaves = LeaveManager.objects.filter(emp_id = user.id).all()
         return render(request,"Mainpage/leaves.html",{"leaves":leaves,"allows":allows})
@@ -259,6 +277,13 @@ def mysalary(request):
     slip_allow = 0
     today_date = date.today()
     if Profiles.objects.filter(email_id = user).all().exists():
+        leaves_data = LeaveManager.objects.filter(emp_id = user.id).filter(status = "Approved").all().values()
+        # total_days = 0
+        # for i in range(len(leaves_data)):
+        #     dates= leaves_data[i]["end_date"] - leaves_data[i]["start_date"]
+        #     days = dates.days
+        #     total_days = total_days + days
+        # print(total_days)
         profile_data = Profiles.objects.filter(email_id = user).all().values()[0]
         name =  profile_data["full_name"]
         Department = profile_data["department_name"][1:]
