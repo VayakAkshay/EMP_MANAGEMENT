@@ -112,6 +112,7 @@ def profilepage(request):
             profile_data.save()
             role.role_name = request.POST.get("role")
             role.emp_id = user.id
+            role.username = user.first_name
             role.save()
             profile_datas = Profiles.objects.filter(email_id = user).all().values()[0]
             salary = profile_datas["salary"]
@@ -219,6 +220,7 @@ def Leaves_page(request):
             leaves_data.start_date = start
             leaves_data.end_date = end
             leaves_data.emp_id = id
+            leaves_data.username = request.user.first_name
             d1 = datetime.datetime.strptime(start, "%Y-%m-%d")
             d2 = datetime.datetime.strptime(end, "%Y-%m-%d")
             time_def = (d2 - d1).days
@@ -256,8 +258,9 @@ def attendance(request):
                 messages.warning(request, "You are already attended for today")
             else:
                 if request.method == "POST":
+                    
                     if arrive_time < times:
-                        attendance = attendacemanager(emp_id = user.id,attendance_desc="Late")
+                        attendance = attendacemanager(emp_id = user.id,attendance_desc="Late",username = request.user.first_name)
                         attendance.save()
                     else:
                         attendance = attendacemanager(emp_id = user.id,attendance_desc = "Early")
@@ -278,12 +281,6 @@ def mysalary(request):
     today_date = date.today()
     if Profiles.objects.filter(email_id = user).all().exists():
         leaves_data = LeaveManager.objects.filter(emp_id = user.id).filter(status = "Approved").all().values()
-        # total_days = 0
-        # for i in range(len(leaves_data)):
-        #     dates= leaves_data[i]["end_date"] - leaves_data[i]["start_date"]
-        #     days = dates.days
-        #     total_days = total_days + days
-        # print(total_days)
         profile_data = Profiles.objects.filter(email_id = user).all().values()[0]
         name =  profile_data["full_name"]
         Department = profile_data["department_name"][1:]

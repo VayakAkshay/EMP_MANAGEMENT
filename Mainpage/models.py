@@ -52,9 +52,10 @@ class LeaveManager(models.Model):
     end_date = models.DateField(default = datetime.date.today)
     status = models.TextField(max_length=30,choices=LEAVE_CHOICES,default = 'In Waiting')
     emp_id = models.IntegerField(default=0)
+    username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status
+        return str(self.emp_id) + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + self.username
 
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
@@ -62,17 +63,19 @@ class attendacemanager(models.Model):
     arrival_time = models.TimeField(default=datetime.datetime.now().strftime("%H:%M:%S")) # type: ignore
     attendance_desc = models.TextField(max_length=30,default="")
     emp_id = models.IntegerField(default=0)
+    username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + str(self.attendance_date) + " - " + self.arrival_time
+        return str(self.emp_id) +" - " +  str(self.attendance_date) + " - " + str(self.arrival_time) + " - " + self.username
 
 class Roles(models.Model):
     role_id = models.AutoField
     role_name = models.TextField(max_length=50,default="")
     emp_id = models.IntegerField(default=0)
+    username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.role_name 
+        return str(self.emp_id) + " - " + self.role_name + " - " + self.username
 
 class SalaryTable(models.Model):
     salary_id = models.AutoField
