@@ -113,6 +113,7 @@ def profilepage(request):
             role.role_name = request.POST.get("role")
             role.emp_id = user.id
             role.username = user.first_name
+            role.department_name = request.POST.get("department")
             role.save()
             profile_datas = Profiles.objects.filter(email_id = user).all().values()[0]
             salary = profile_datas["salary"]

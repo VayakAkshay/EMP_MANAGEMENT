@@ -18,7 +18,7 @@ class Profiles(models.Model):
     role = models.TextField(max_length=50,default = "")
 
     def __str__(self):
-        return str(self.profile_id) + " - " + self.full_name + " - " + self.email_id + " - " + str(self.mobile_no) + " - " + self.department_name + " - " + str(self.salary) + " - " + " - " + self.role + " - " + str(self.dateofjoin)
+        return str(self.profile_id) + " - " + self.full_name + " - " + self.department_name + " - " + self.role + " - " + str(self.mobile_no) + " - " + self.email_id  + " - " + str(self.salary) + " - " + str(self.dateofjoin)
 
 
 class TaskManager(models.Model):
@@ -56,7 +56,7 @@ class LeaveManager(models.Model):
     username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.username + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status
+        return str(self.emp_id) + " - " + self.username + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + self.leave_reason
 
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
@@ -67,16 +67,17 @@ class attendacemanager(models.Model):
     username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.username +" - " +  str(self.attendance_date) + " - " + str(self.arrival_time)
+        return str(self.emp_id) + " - " + self.username + " - " + str(self.arrival_time) +" - " +  str(self.attendance_date)
 
 class Roles(models.Model):
     role_id = models.AutoField
     role_name = models.TextField(max_length=50,default="")
     emp_id = models.IntegerField(default=0)
     username = models.TextField(max_length=50,default="")
+    department_name = models.TextField(max_length=500,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.username + " - " + self.role_name 
+        return str(self.emp_id) + " - " + self.username + " - " + self.department_name + " - " + self.role_name 
 
 class SalaryTable(models.Model):
     salary_id = models.AutoField
