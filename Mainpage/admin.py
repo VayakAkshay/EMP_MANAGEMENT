@@ -20,7 +20,7 @@ class RolesAdmin(admin.ModelAdmin):
     list_display = ["emp_id","username","department_name","role_name"]
 
 class DepartmentListAdmin(admin.ModelAdmin):
-    list_display = ["department_id","department_name"]
+    list_display = ["department_name"]
 
 admin.site.register(Profiles,ProfilesAdmin)
 admin.site.register(TaskManager,TaskManagerAdmin)
