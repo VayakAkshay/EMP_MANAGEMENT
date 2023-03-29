@@ -30,9 +30,10 @@ class TaskManager(models.Model):
     status = models.TextField(max_length=50,default="Remaining")
     priority = models.IntegerField(default=0)
     emp_id = models.IntegerField(default=0)
+    username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return self.task_name + " - " + str(self.emp_id) + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + str(self.priority)
+        return str(self.emp_id) + " - " + self.username + " - " + self.task_name + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + str(self.priority)
     
 LEAVE_CHOICES = (
     ("In Waiting", "In Waiting"),
@@ -55,7 +56,7 @@ class LeaveManager(models.Model):
     username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status + " - " + self.username
+        return str(self.emp_id) + " - " + self.username + " - " + self.leave_type + " - " + str(self.start_date) + " - " + str(self.end_date) + " - " + self.status
 
 class attendacemanager(models.Model):
     attendance_id = models.AutoField
@@ -66,7 +67,7 @@ class attendacemanager(models.Model):
     username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) +" - " +  str(self.attendance_date) + " - " + str(self.arrival_time) + " - " + self.username
+        return str(self.emp_id) + " - " + self.username +" - " +  str(self.attendance_date) + " - " + str(self.arrival_time)
 
 class Roles(models.Model):
     role_id = models.AutoField
@@ -75,7 +76,7 @@ class Roles(models.Model):
     username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.role_name + " - " + self.username
+        return str(self.emp_id) + " - " + self.username + " - " + self.role_name 
 
 class SalaryTable(models.Model):
     salary_id = models.AutoField
