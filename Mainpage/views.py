@@ -156,6 +156,7 @@ def profilepage(request):
                 salary_table.gross_deduct = salary_list[i]["gross"]
                 salary_table.Net = salary_list[i]["net"]
                 salary_table.status = "Unpaid"
+                salary_table.username = request.user.first_name
                 salary_table.save()
             return redirect("/profile/")
     form = ImageForm()

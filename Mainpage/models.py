@@ -89,9 +89,10 @@ class SalaryTable(models.Model):
     gross_deduct = models.IntegerField(default=0)
     Net = models.IntegerField(default=0)
     status = models.TextField(max_length=30,choices=SALARY_CHOICE,default = 'Unpaid')
+    username = models.TextField(max_length=50,default="")
 
     def __str__(self):
-        return str(self.emp_id) + " - " + self.months + " - " + str(self.gross_salary) + " - " + str(self.gross_deduct) + " - " + str(self.Net) + " - " + self.status
+        return str(self.emp_id) + self.username + " - " + self.months + " - " + str(self.gross_salary) + " - " + str(self.gross_deduct) + " - " + str(self.Net) + " - " + self.status
 
 class DepartmentList(models.Model):
     department_id = models.AutoField
